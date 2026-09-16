@@ -44,6 +44,16 @@
       }
     ],
     "menus": {
+      "commandPalette": [
+        {
+          "command": "swaggerViewer.openPreview",
+          "when": "editorLangId =~ /^(yaml|json|jsonc)$/"
+        },
+        {
+          "command": "swaggerViewer.openPreviewToSide",
+          "when": "editorLangId =~ /^(yaml|json|jsonc)$/"
+        }
+      ],
       "editor/title": [
         {
           "command": "swaggerViewer.openPreviewToSide",
