@@ -3,10 +3,37 @@
   "tasks": [
     {
       "type": "npm",
+      "script": "watch",
+      "label": "npm: watch",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "esbuild",
+        "pattern": {
+          "regexp": "^✘ \\[ERROR\\] (.*)$",
+          "message": 1
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^.*\\[watch\\].*$",
+          "endsPattern": "^.*\\[watch\\] build finished.*$"
+        }
+      },
+      "presentation": { "reveal": "silent", "panel": "dedicated" }
+    },
+    {
+      "type": "npm",
       "script": "build",
-      "problemMatcher": "$tsc",
-      "group": "build",
-      "label": "npm: build"
+      "label": "npm: build",
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": [],
+      "presentation": { "reveal": "silent", "panel": "dedicated" }
+    },
+    {
+      "type": "npm",
+      "script": "test",
+      "label": "npm: test",
+      "group": "test",
+      "problemMatcher": "$tsc"
     }
   ]
 }

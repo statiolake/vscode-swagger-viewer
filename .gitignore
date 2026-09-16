@@ -4,3 +4,4 @@ dist-test/
 media/swagger-ui/
 *.vsix
 .playwright-mcp/
+.debug-run/
