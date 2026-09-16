@@ -28,7 +28,11 @@
     "Visualization",
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onLanguage:yaml",
+    "onLanguage:json",
+    "onLanguage:jsonc"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
@@ -44,18 +48,21 @@
       }
     ],
     "menus": {
+      "commandPalette": [
+        {
+          "command": "swaggerViewer.openPreview",
+          "when": "swaggerViewer.isOpenApiEditor"
+        },
+        {
+          "command": "swaggerViewer.openPreviewToSide",
+          "when": "swaggerViewer.isOpenApiEditor"
+        }
+      ],
       "editor/title": [
         {
           "command": "swaggerViewer.openPreviewToSide",
           "group": "navigation",
-          "when": "resourceLangId =~ /^(yaml|json|jsonc)$/"
-        }
-      ],
-      "explorer/context": [
-        {
-          "command": "swaggerViewer.openPreview",
-          "group": "navigation",
-          "when": "resourceLangId =~ /^(yaml|json|jsonc)$/"
+          "when": "swaggerViewer.isOpenApiEditor"
         }
       ]
     },
@@ -63,7 +70,7 @@
       {
         "command": "swaggerViewer.openPreviewToSide",
         "key": "shift+alt+p",
-        "when": "editorTextFocus && editorLangId =~ /^(yaml|json|jsonc)$/"
+        "when": "editorTextFocus && swaggerViewer.isOpenApiEditor"
       }
     ]
   },

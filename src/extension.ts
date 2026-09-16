@@ -1,10 +1,12 @@
 import * as vscode from "vscode";
+import { trackOpenApiEditor } from "./context";
 import { SwaggerPreviewManager } from "./preview";
 
 export function activate(context: vscode.ExtensionContext): void {
   const previews = new SwaggerPreviewManager(context.extensionUri);
   context.subscriptions.push(
     previews,
+    trackOpenApiEditor(),
     vscode.commands.registerCommand("swaggerViewer.openPreview", (uri?: vscode.Uri) =>
       previews.open(uri, vscode.ViewColumn.Active)
     ),

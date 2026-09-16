@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { toWebviewMessage } from "../src/preview-message";
-import { parseSpec, SpecError } from "../src/spec";
+import { declaresOpenApi, parseSpec, SpecError } from "../src/spec";
 
 test("parses an OpenAPI 3 YAML document", () => {
   const doc = parseSpec("openapi: 3.0.0\ninfo:\n  title: Pets\n  version: '1'\npaths: {}\n");
@@ -31,4 +31,20 @@ test("reports a missing version field to the preview", () => {
     type: "error",
     message: 'The document has no "openapi" or "swagger" version field.'
   });
+});
+
+test("recognizes OpenAPI and Swagger documents by their version key", () => {
+  assert.equal(declaresOpenApi("openapi: 3.0.0\ninfo: {}\n"), true);
+  assert.equal(declaresOpenApi("swagger: '2.0'\n"), true);
+  assert.equal(declaresOpenApi('{\n  "openapi": "3.1.0"\n}'), true);
+});
+
+test("keeps recognizing a document while it is temporarily broken", () => {
+  assert.equal(declaresOpenApi("openapi: 3.0.0\ninfo: [unclosed\n"), true);
+});
+
+test("does not recognize other YAML and JSON files", () => {
+  assert.equal(declaresOpenApi("name: build\non: push\n"), false);
+  assert.equal(declaresOpenApi('{"name": "pkg", "version": "1.0.0"}'), false);
+  assert.equal(declaresOpenApi("info:\n  openapi_like: true\n"), false);
 });

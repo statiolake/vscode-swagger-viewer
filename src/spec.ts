@@ -21,3 +21,15 @@ export function parseSpec(text: string): OpenApiDocument {
   }
   return doc;
 }
+
+const YAML_VERSION_KEY = /^["']?(openapi|swagger)["']?\s*:/m;
+const JSON_VERSION_KEY = /"(openapi|swagger)"\s*:/;
+
+/**
+ * Cheap check used to decide whether the preview commands are offered.
+ * It only looks for a version key so that a document stays recognized while
+ * it is temporarily unparsable during editing; `parseSpec` does the real validation.
+ */
+export function declaresOpenApi(text: string): boolean {
+  return YAML_VERSION_KEY.test(text) || JSON_VERSION_KEY.test(text);
+}
