@@ -17,3 +17,18 @@ body {
   color: #fff;
   background: #b3261e;
 }
+
+/*
+ * VS Code injects default webview styles (in the `vscode-default` cascade layer)
+ * that colour every `code` element with the editor theme's textPreformat colours.
+ * The preview always uses Swagger UI's own light palette, so those theme colours
+ * land on surfaces they were not chosen for: dark red on the dark response
+ * examples in light themes, pale yellow on white in dark themes. Code takes its
+ * colours from Swagger UI instead; unlayered rules win over the layered defaults.
+ */
+code {
+  color: inherit;
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+}
